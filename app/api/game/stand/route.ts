@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import {
   calcularPontos,
-  GameState,         // <--- Importar
-  shortStringToCarta, // <--- Importar
+  GameState,         
+  shortStringToCarta, 
 } from '@/lib/blackjack';
 
 export async function POST() {
@@ -14,18 +14,13 @@ export async function POST() {
     return NextResponse.json({ error: 'Jogo não iniciado.' }, { status: 400 });
   }
 
-  // 1. Pega o estado salvo (baralho é string[])
   const estado: GameState = JSON.parse(gameStateCookie.value);
 
-  // 2. Lógica do Dealer
   let pontosDealer = calcularPontos(estado.dealer);
   while (pontosDealer < 17) {
-    // 3. Puxa uma carta minificada
     const cartaMinificada = estado.baralho.pop();
     if (cartaMinificada) {
-      // 4. Expande para o objeto completo
       const novaCarta = shortStringToCarta(cartaMinificada);
-      // 5. Adiciona o objeto na mão do dealer
       estado.dealer.push(novaCarta);
     }
     pontosDealer = calcularPontos(estado.dealer);
@@ -51,7 +46,6 @@ export async function POST() {
     resultado: resultado
   });
 
-  // 6. Limpa o cookie (sem mudanças aqui)
   response.cookies.set('blackjack-game', '', { 
     httpOnly: true, 
     path: '/', 
