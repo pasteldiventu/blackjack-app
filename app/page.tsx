@@ -103,9 +103,28 @@ export default function Home() {
       {game?.gameOver && (
         <div className="mt-8 text-center">
           <h2 className="text-4xl font-bold text-yellow-400">{game.resultado}</h2>
-          <p className="text-xl">
-            Dealer tinha {game.pontos_dealer} pontos.
-          </p>
+
+          {/* Jogador estourou */}
+          {game.pontos_jogador > 21 && (
+            <p className="text-xl text-red-400">
+              Você extrapolou o limite! (Acima de 21)
+            </p>
+          )}
+
+          {/* Dealer estourou */}
+          {((game.pontos_dealer ?? 0) > 21) && game.pontos_jogador <= 21 && (
+            <p className="text-xl text-green-400">
+              O Dealer extrapolou o limite! (Acima de 21)
+            </p>
+          )}
+
+          {/* Dealer venceu com mais pontos sem estourar */}
+          {((game.pontos_dealer ?? 0) <= 21) &&
+            ((game.pontos_dealer ?? 0) > game.pontos_jogador) && (
+              <p className="text-xl">
+                Dealer tinha {game.pontos_dealer} pontos.
+              </p>
+            )}
         </div>
       )}
 
