@@ -69,7 +69,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-12 bg-gray-900 text-white">
-      <h1 className="text-5xl font-bold mb-8">♠️ Blackjack Boladão ♥️</h1>
+      <h1 className="text-5xl font-bold mb-8">♠️ Blackjack ♥️</h1>
 
       {/* Botão de Controle Principal */}
       {!game || game.gameOver ? (
